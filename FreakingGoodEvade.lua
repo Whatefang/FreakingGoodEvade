@@ -1,3 +1,5 @@
+local version = "3"
+
 require "old2dgeo"
 
 class 'CollisionPE'
@@ -540,7 +542,7 @@ thatfile = SCRIPT_PATH.."movementblock.txt"
 currentbuffer = 0
 bufferset = false
 lastnonattack = 0
-hitboxTable = {['Xerath'] = 65, ['Kassadin'] = 65, ['Rengar'] = 65, ['Thresh'] = 55.0, ['Ziggs'] = 55.0, ['KogMaw'] = 65, ['Katarina'] = 65, ['Riven'] = 65, ['Ashe'] = 65, ['Soraka'] = 65, ['Jinx'] = 65, ['JarvanIV'] = 65, ['Tryndamere'] = 65, ['Singed'] = 65, ['Diana'] = 65, ['Ahri'] = 65, ['Lulu'] = 65, ['MasterYi'] = 65, ['Lissandra'] = 65, ['Draven'] = 65, ['FiddleSticks'] = 65, ['Maokai'] = 80.0, ['Sivir'] = 65, ['Corki'] = 65, ['Janna'] = 65, ['Nasus'] = 80.0, ['LeeSin'] = 65, ['Jax'] = 65, ['Blitzcrank'] = 80.0, ['Shen'] = 65, ['Nocturne'] = 65, ['Sona'] = 65, ['Caitlyn'] = 65, ['Trundle'] = 65, ['Malphite'] = 80.0, ['Mordekaiser'] = 80.0, ['Vi'] = 50, ['Renekton'] = 80.0, ['Anivia'] = 65, ['Fizz'] = 65, ['Heimerdinger'] = 55.0, ['Evelynn'] = 65, ['Rumble'] = 80.0, ['Leblanc'] = 65, ['Darius'] = 80.0, ['Viktor'] = 65, ['XinZhao'] = 65, ['Orianna'] = 65, ['Vladimir'] = 65, ['Nidalee'] = 65, ['Syndra'] = 65, ['Zac'] = 80.0, ['Olaf'] = 65, ['Veigar'] = 55.0, ['Twitch'] = 65, ['Alistar'] = 80.0, ['Akali'] = 65, ['Urgot'] = 80.0, ['Leona'] = 65, ['Talon'] = 65, ['Karma'] = 65, ['Jayce'] = 65, ['Galio'] = 80.0, ['Shaco'] = 65, ['Taric'] = 65, ['TwistedFate'] = 65, ['Varus'] = 65, ['Garen'] = 65, ['Swain'] = 65, ['Vayne'] = 65, ['Fiora'] = 65, ['Quinn'] = 65, ['Kayle'] = 65, ['Brand'] = 65, ['Teemo'] = 55.0, ['Amumu'] = 55.0, ['Annie'] = 55.0, ['Elise'] = 65, ['Nami'] = 65, ['Poppy'] = 55.0, ['AniviaEgg'] = 65, ['Tristana'] = 55.0, ['Graves'] = 65, ['Morgana'] = 65, ['Gragas'] = 80.0, ['MissFortune'] = 65, ['Warwick'] = 65, ['Cassiopeia'] = 65, ['DrMundo'] = 80.0, ['Volibear'] = 80.0, ['Irelia'] = 65, ['Lucian'] = 65, ['Yorick'] = 80.0, ['Udyr'] = 65, ['MonkeyKing'] = 65, ['Kennen'] = 55.0, ['Nunu'] = 65, ['Ryze'] = 65, ['Zed'] = 65, ['Nautilus'] = 80.0, ['Gangplank'] = 65, ['shopevo'] = 65, ['Lux'] = 65, ['Sejuani'] = 80.0, ['Ezreal'] = 65, ['Khazix'] = 65, ['Sion'] = 80.0, ['Aatrox'] = 65, ['Hecarim'] = 80.0, ['Pantheon'] = 65, ['Shyvana'] = 50.0, ['Zyra'] = 65, ['Karthus'] = 65, ['Rammus'] = 65, ['Zilean'] = 65, ['Chogath'] = 80.0, ['Malzahar'] = 65, ['KogMawDead'] = 65, ['QuinnValor'] = 65, ['Nidalee_Cougar'] = 65}
+hitboxTable = {['Yasuo'] = 65, ['VelKoz'] = 65, ['Xerath'] = 65, ['Kassadin'] = 65, ['Rengar'] = 65, ['Thresh'] = 55.0, ['Ziggs'] = 55.0, ['KogMaw'] = 65, ['Katarina'] = 65, ['Riven'] = 65, ['Ashe'] = 65, ['Soraka'] = 65, ['Jinx'] = 65, ['JarvanIV'] = 65, ['Tryndamere'] = 65, ['Singed'] = 65, ['Diana'] = 65, ['Ahri'] = 65, ['Lulu'] = 65, ['MasterYi'] = 65, ['Lissandra'] = 65, ['Draven'] = 65, ['FiddleSticks'] = 65, ['Maokai'] = 80.0, ['Sivir'] = 65, ['Corki'] = 65, ['Janna'] = 65, ['Nasus'] = 80.0, ['LeeSin'] = 65, ['Jax'] = 65, ['Blitzcrank'] = 80.0, ['Shen'] = 65, ['Nocturne'] = 65, ['Sona'] = 65, ['Caitlyn'] = 65, ['Trundle'] = 65, ['Malphite'] = 80.0, ['Mordekaiser'] = 80.0, ['Vi'] = 50, ['Renekton'] = 80.0, ['Anivia'] = 65, ['Fizz'] = 65, ['Heimerdinger'] = 55.0, ['Evelynn'] = 65, ['Rumble'] = 80.0, ['Leblanc'] = 65, ['Darius'] = 80.0, ['Viktor'] = 65, ['XinZhao'] = 65, ['Orianna'] = 65, ['Vladimir'] = 65, ['Nidalee'] = 65, ['Syndra'] = 65, ['Zac'] = 80.0, ['Olaf'] = 65, ['Veigar'] = 55.0, ['Twitch'] = 65, ['Alistar'] = 80.0, ['Akali'] = 65, ['Urgot'] = 80.0, ['Leona'] = 65, ['Talon'] = 65, ['Karma'] = 65, ['Jayce'] = 65, ['Galio'] = 80.0, ['Shaco'] = 65, ['Taric'] = 65, ['TwistedFate'] = 65, ['Varus'] = 65, ['Garen'] = 65, ['Swain'] = 65, ['Vayne'] = 65, ['Fiora'] = 65, ['Quinn'] = 65, ['Kayle'] = 65, ['Brand'] = 65, ['Teemo'] = 55.0, ['Amumu'] = 55.0, ['Annie'] = 55.0, ['Elise'] = 65, ['Nami'] = 65, ['Poppy'] = 55.0, ['AniviaEgg'] = 65, ['Tristana'] = 55.0, ['Graves'] = 65, ['Morgana'] = 65, ['Gragas'] = 80.0, ['MissFortune'] = 65, ['Warwick'] = 65, ['Cassiopeia'] = 65, ['DrMundo'] = 80.0, ['Volibear'] = 80.0, ['Irelia'] = 65, ['Lucian'] = 65, ['Yorick'] = 80.0, ['Udyr'] = 65, ['MonkeyKing'] = 65, ['Kennen'] = 55.0, ['Nunu'] = 65, ['Ryze'] = 65, ['Zed'] = 65, ['Nautilus'] = 80.0, ['Gangplank'] = 65, ['shopevo'] = 65, ['Lux'] = 65, ['Sejuani'] = 80.0, ['Ezreal'] = 65, ['Khazix'] = 65, ['Sion'] = 80.0, ['Aatrox'] = 65, ['Hecarim'] = 80.0, ['Pantheon'] = 65, ['Shyvana'] = 50.0, ['Zyra'] = 65, ['Karthus'] = 65, ['Rammus'] = 65, ['Zilean'] = 65, ['Chogath'] = 80.0, ['Malzahar'] = 65, ['KogMawDead'] = 65, ['QuinnValor'] = 65, ['Nidalee_Cougar'] = 65}
 
 
 function getTarget(targetId)
@@ -721,12 +723,10 @@ function CheckBall(obj)
 end 
 
 local AutoUpdate = true
-
-local version = "2"
 local SELF = SCRIPT_PATH..GetCurrentEnv().FILE_NAME
 local URL = "https://raw.githubusercontent.com/Whatefang/FreakingGoodEvade/master/FreakingGoodEvade.lua"
 local UPDATE_TMP_FILE = LIB_PATH.."FGETmp.txt"
-local versionmessage = "<font color=\"#81BEF7\" >Changelog: Will no longer flash Annie ult if you have the option turned off. Changed the hitbox size used for dodging spells to better reflect actual hit box size, and allowed packets to go through if they didn't move you into a dangerous area. Should help with lockups after dodging a spell, needs testing though.</font>"
+local versionmessage = "<font color=\"#81BEF7\" >Changelog: Will no longer flash Annie ult if you have the option turned off. Changed the hitbox size used for dodging spells to better reflect actual hit box size, and allowed packets to go through if they didn't move you into a dangerous area. Should help with lockups after dodging a spell, needs testing though. Added Yasuo and Vel'Koz hitboxes, let me know if there's an issue.</font>"
 
 function Update()
 DownloadFile(URL, UPDATE_TMP_FILE, UpdateCallback)
