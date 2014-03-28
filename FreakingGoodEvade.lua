@@ -1,4 +1,4 @@
-local version = "2"
+local version = "2.00"
 
 local autoupdateenabled = true
 local UPDATE_SCRIPT_NAME = "Freaking Good Evade"
