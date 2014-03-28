@@ -709,7 +709,7 @@ local AutoUpdate = false
 
 local version = "1"
 local SELF =  SCRIPT_PATH..GetCurrentEnv().FILE_NAME
-local URL = ""
+local URL = "https://raw.githubusercontent.com/Whatefang/FreakingGoodEvade/master/FreakingGoodEvade.lua"
 local UPDATE_TMP_FILE = LIB_PATH.."FGETmp.txt"
 local versionmessage = "<font color=\"#81BEF7\" >Changelog: No longer stops spells which don't interrupt movement from being cast while dodging (Syndra QW, Gragas Q activation, etc). Added drawing of hitbox for player.</font>"
 
