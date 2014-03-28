@@ -1,3 +1,33 @@
+local version = "2.00"
+
+local autoupdateenabled = true
+local UPDATE_SCRIPT_NAME = "Freaking Good Evade"
+local UPDATE_HOST = "raw.githubusercontent.com"
+local UPDATE_PATH = "/Whatefang/FreakingGoodEvade/master/FreakingGoodEvade.lua"
+local UPDATE_FILE_PATH = SCRIPT_PATH..GetCurrentEnv().FILE_NAME
+local UPDATE_URL = "https://"..UPDATE_HOST..UPDATE_PATH
+
+local ServerData
+
+function AutoUpdate()
+	if autoupdateenabled then
+		GetAsyncWebResult(UPDATE_HOST, UPDATE_PATH, function(d) ServerData = d end)
+		function update()
+			if ServerData ~= nil then
+				local ServerVersion = string.sub(ServerData, 18, 22)
+
+				if ServerVersion ~= nil and tonumber(ServerVersion) ~= nil and tonumber(ServerVersion) > tonumber(version) then
+					DownloadFile(UPDATE_URL.."?nocache"..myHero.charName..os.clock(), UPDATE_FILE_PATH, function () print("<font color=\"#FF0000\"><b>"..UPDATE_SCRIPT_NAME..":</b> successfully updated. ("..version.." => "..ServerVersion.."). Please reload the script using F9.</font>") end)     
+				elseif ServerVersion then
+					print("<font color=\"#FF0000\"><b>"..UPDATE_SCRIPT_NAME..":</b> You have got the latest version: <u><b>"..ServerVersion.."</b></u></font>")
+				end		
+				ServerData = nil
+			end
+		end
+		AddTickCallback(update)
+	end
+end
+
 require "old2dgeo"
 
 class 'CollisionPE'
@@ -720,50 +750,9 @@ function CheckBall(obj)
 	end
 end 
 
-local AutoUpdate = true
-
-local version = "2"
-local SELF = SCRIPT_PATH..GetCurrentEnv().FILE_NAME
-local URL = "https://raw.githubusercontent.com/Whatefang/FreakingGoodEvade/master/FreakingGoodEvade.lua"
-local UPDATE_TMP_FILE = LIB_PATH.."FGETmp.txt"
-local versionmessage = "<font color=\"#81BEF7\" >Changelog: Will no longer flash Annie ult if you have the option turned off. Changed the hitbox size used for dodging spells to better reflect actual hit box size, and allowed packets to go through if they didn't move you into a dangerous area. Should help with lockups after dodging a spell, needs testing though.</font>"
-
-function Update()
-DownloadFile(URL, UPDATE_TMP_FILE, UpdateCallback)
-end
-
-function UpdateCallback()
-file = io.open(UPDATE_TMP_FILE, "rb")
-if file ~= nil then
-content = file:read("*all")
-file:close()
-os.remove(UPDATE_TMP_FILE)
-if content then
-tmp, sstart = string.find(content, "local version = \"")
-if sstart then
-send, tmp = string.find(content, "\"", sstart+1)
-end
-if send then
-Version = tonumber(string.sub(content, sstart+1, send-1))
-end
-if (Version ~= nil) and (Version > tonumber(version)) and content:find("--EOS--") then
-file = io.open(SELF, "w")
-if file then
-file:write(content)
-file:flush()
-file:close()
-PrintChat("<font color=\"#81BEF7\" >FreakingGoodEvade:</font> <font color=\"#00FF00\">Successfully updated to: v"..Version.."</font>")
-else
-PrintChat("<font color=\"#81BEF7\" >FreakingGoodEvade:</font> <font color=\"#FF0000\">Error updating to new version (v"..Version..")</font>")
-end
-elseif (Version ~= nil) and (Version == tonumber(version)) then
-PrintChat("<font color=\"#81BEF7\" >FreakingGoodEvade:</font> <font color=\"#00FF00\">No updates found, latest version: v"..Version.." </font>")
-end
-end
-end
-end
-
 function OnLoad()
+	
+	AutoUpdate()
 
 	ball = nil
 	GoodEvadeConfig = scriptConfig("Freaking Good Evade", "Freaking Good Evade")
