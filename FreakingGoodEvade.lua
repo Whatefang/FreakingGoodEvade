@@ -1,4 +1,4 @@
-local version = "3"
+local version = "4"
 
 require "old2dgeo"
 
@@ -313,7 +313,7 @@ champions2 = {
 ["Noxious Blast"] = {name = "NoxiousBlast", spellName = "CassiopeiaNoxiousBlast", spellDelay = 250, projectileName = "CassNoxiousSnakePlane_green.troy", projectileSpeed = 500, range = 850, radius = 130, type = "circular", cc = "false", collision = "false", shieldnow = "true"},
 }},
 ["Sivir"] = {charName = "Sivir", skillshots = {
-["Boomerang Blade"] = {name = "BoomerangBlade", spellName = "SivirQ", spellDelay = 250, projectileName = "Sivir_Base_Q_mis.troy", projectileSpeed = 1350, range = 1175, radius = 101, type = "line", cc = "false", collision = "false", shieldnow = "true"},
+["Boomerang Blade"] = {name = "BoomerangBlade", spellName = "SivirQ", spellDelay = 250, projectileName = "Sivir_Base_Q_mis.troy", projectileSpeed = 1350, range = 1150, radius = 101, type = "line", cc = "false", collision = "false", shieldnow = "true"},
 }},
 ["Ashe"] = {charName = "Ashe", skillshots = {
 ["Enchanted Arrow"] = {name = "EnchantedArrow", spellName = "EnchantedCrystalArrow", spellDelay = 250, projectileName = "Ashe_Base_R_mis.troy", projectileSpeed = 1600, range = 25000, radius = 120, type = "line", cc = "true", collision = "false", shieldnow = "true"},
@@ -417,10 +417,11 @@ champions2 = {
 ["W"] =  {name = "Zap", spellName = "JinxW", spellDelay = 600, projectileName = "Jinx_W_Beam.troy", projectileSpeed = 3300, range = 1450, radius = 70, type = "line", cc = "true", collision = "true", shieldnow = "true"},
 ["R"] =  {name = "SuperMegaDeathRocket", spellName = "JinxRWrapper", spellDelay = 600, projectileName = "Jinx_R_Mis.troy", projectileSpeed = 1700, range = 20000, radius = 120, type = "line", cc = "false", collision = "false", shieldnow = "true"},
 }},
-["VelKoz"] = {charName = "VelKoz", skillshots = {
-["VelKozQ"] =  {name = "VelKozQ", spellName = "VelKozQ", spellDelay = 250, projectileName = "Jinx_W_Beam.troy", projectileSpeed = 1200, range = 1050, radius = 210, type = "line", cc = "true", collision = "true", shieldnow = "true"},
-["VelkozW"] =  {name = "VelkozW", spellName = "VelkozW", spellDelay = 250, projectileName = "DarkBinding_mis.troy", projectileSpeed = 1200, range = 1050, radius = 210, type = "line", cc = "false", collision = "false", shieldnow = "true"},
-["VelkozE"] =  {name = "VelkozE", spellName = "VelkozE", spellDelay = 250, projectileName = "DarkBinding_mis.troy", projectileSpeed = 1200, range = 800, radius = 225, type = "circular", cc = "true", collision = "false", shieldnow = "true"},
+["Velkoz"] = {charName = "Velkoz", skillshots = {
+["PlasmaFission"] =  {name = "PlasmaFission", spellName = "VelKozQ", spellDelay = 250, projectileName = "Velkoz_Base_Q_mis.troy", projectileSpeed = 1200, range = 1050, radius = 120, type = "line", cc = "true", collision = "true", shieldnow = "true"},
+["Plasma Fission Split"] =  {name = "VelKozQSplit", spellName = "VelKozQ", spellDelay = 250, projectileName = "Velkoz_Base_Q_Split_mis.troy", projectileSpeed = 1200, range = 1050, radius = 120, type = "line", cc = "true", collision = "true", shieldnow = "true"},
+["Void Rift"] =  {name = "VelkozW", spellName = "VelkozW", spellDelay = 250, projectileName = "Velkoz_Base_W_Turret.troy", projectileSpeed = 1200, range = 1050, radius = 125, type = "line", cc = "false", collision = "false", shieldnow = "true"},
+["Tectonic Disruption"] =  {name = "VelkozE", spellName = "VelkozE", spellDelay = 250, projectileName = "DarkBinding_mis.troy", projectileSpeed = 1200, range = 800, radius = 225, type = "circular", cc = "true", collision = "false", shieldnow = "true"},
 }},          
 }
 champions3 = {
@@ -769,6 +770,12 @@ end
 end
 
 function OnLoad()
+
+	hitboxSize = hitboxTable[GetMyHero().charName]
+	
+	if hitboxSize == nil then
+		hitboxSize = 80.0
+	end
 
 	ball = nil
 	GoodEvadeConfig = scriptConfig("Freaking Good Evade", "Freaking Good Evade")
@@ -1188,7 +1195,11 @@ function OnCreateObj(object)
 						
 						if GoodEvadeSkillshotConfig[tostring(skillshot.name)] == 2 or (GoodEvadeSkillshotConfig[tostring(skillshot.name)] == 1 and nEnemies <= 2 and not (GoodEvadeConfig.dodgeCConly or GoodEvadeConfig.dodgeCConly2)) then
 							if skillshot.type == "line" then
-								skillshotToAdd = {object = object, startPosition = nil, endPosition = nil, directionVector = nil, startTick = GetTickCount(), endTick = GetTickCount() + skillshot.range/skillshot.projectileSpeed*1000, skillshot = skillshot, evading = false, drawit = true, alreadydashed = false}
+								if(skillshotToAdd ~= nil) then
+									skillshotToAdd2 = {object = object, startPosition = nil, endPosition = nil, directionVector = nil, startTick = GetTickCount(), endTick = GetTickCount() + skillshot.range/skillshot.projectileSpeed*1000, skillshot = skillshot, evading = false, drawit = true, alreadydashed = false}
+								else
+									skillshotToAdd = {object = object, startPosition = nil, endPosition = nil, directionVector = nil, startTick = GetTickCount(), endTick = GetTickCount() + skillshot.range/skillshot.projectileSpeed*1000, skillshot = skillshot, evading = false, drawit = true, alreadydashed = false}
+								end
 								elseif skillshot.type == "circular" then
 								endPosition = Point2(object.x, object.z)
 								startPosition = Point2(object.x, object.z)
@@ -1331,12 +1342,20 @@ function OnTick()
 		end
 	end
 	if skillshotToAdd ~= nil and skillshotToAdd.object ~= nil and skillshotToAdd.object.valid and (GetTickCount() - skillshotToAdd.startTick) >= GoodEvadeConfig.fowdelay and skillshotToAdd.startPosition == nil then
-		skillshotToAdd.startPosition = Point2(skillshotToAdd.object.x, skillshotToAdd.object.z)
+			skillshotToAdd.startPosition = Point2(skillshotToAdd.object.x, skillshotToAdd.object.z)
 		elseif skillshotToAdd ~= nil and skillshotToAdd.object ~= nil and skillshotToAdd.object.valid and (GetTickCount() - skillshotToAdd.startTick) >= (GoodEvadeConfig.fowdelay+1) then
-		skillshotToAdd.directionVector = (Point2(skillshotToAdd.object.x, skillshotToAdd.object.z) - skillshotToAdd.startPosition):normalized()
-		skillshotToAdd.endPosition = skillshotToAdd.startPosition + skillshotToAdd.directionVector * skillshotToAdd.skillshot.range        
-		table.insert(detectedSkillshots, skillshotToAdd)
-		skillshotToAdd = nil
+			skillshotToAdd.directionVector = (Point2(skillshotToAdd.object.x, skillshotToAdd.object.z) - skillshotToAdd.startPosition):normalized()
+			skillshotToAdd.endPosition = skillshotToAdd.startPosition + skillshotToAdd.directionVector * skillshotToAdd.skillshot.range        
+			table.insert(detectedSkillshots, skillshotToAdd)
+			skillshotToAdd = nil
+	end
+	if skillshotToAdd2 ~= nil and skillshotToAdd2.object ~= nil and skillshotToAdd2.object.valid and (GetTickCount() - skillshotToAdd2.startTick) >= GoodEvadeConfig.fowdelay and skillshotToAdd2.startPosition == nil then
+			skillshotToAdd2.startPosition = Point2(skillshotToAdd2.object.x, skillshotToAdd2.object.z)
+		elseif skillshotToAdd2 ~= nil and skillshotToAdd2.object ~= nil and skillshotToAdd2.object.valid and (GetTickCount() - skillshotToAdd2.startTick) >= (GoodEvadeConfig.fowdelay+1) then
+			skillshotToAdd2.directionVector = (Point2(skillshotToAdd2.object.x, skillshotToAdd2.object.z) - skillshotToAdd2.startPosition):normalized()
+			skillshotToAdd2.endPosition = skillshotToAdd2.startPosition + skillshotToAdd2.directionVector * skillshotToAdd2.skillshot.range        
+			table.insert(detectedSkillshots, skillshotToAdd2)
+			skillshotToAdd2 = nil
 	end
 	if shieldtick ~= nil then
 		if GetTickCount() >= shieldtick then
@@ -1434,6 +1453,15 @@ function OnTick()
 		if detectedSkillshot.endTick <= GetTickCount() then
 			table.remove(detectedSkillshots, i)
 			i = i-1
+			if(detectedSkillshot.skillshot.name == "BoomerangBlade" and detectedSkillshot.done ~= true) then
+				directionVector = (detectedSkillshot.startPosition - detectedSkillshot.endPosition):normalized()
+				newSkillshot = {startPosition = detectedSkillshot.endPosition, endPosition = detectedSkillshot.startPosition,
+								directionVector = directionVector, startTick = GetTickCount(), 
+								endTick = GetTickCount() + detectedSkillshot.skillshot.range/detectedSkillshot.skillshot.projectileSpeed*1000, skillshot = detectedSkillshot.skillshot, evading = detectedSkillshot.evading, drawit = true, alreadydashed = detectedSkillshot.alreadydashed, done = true}
+				
+				table.insert(detectedSkillshots, newSkillshot)
+			end	
+			
 			if detectedSkillshot.evading then
 				continueMovement(detectedSkillshot)
 			end
@@ -1803,7 +1831,7 @@ end
 
 function OnDraw()
 		if GoodEvadeConfig.drawEnabled then
-		DrawCircle(GetMyHero().x, GetMyHero().y + 5, GetMyHero().z, hitboxTable[GetMyHero().charName], 0xFFFFFF)
+		DrawCircle(GetMyHero().x, GetMyHero().y + 5, GetMyHero().z, hitboxSize, 0xFFFFFF)
 		--DrawLine(GetMyHero().x, GetMyHero().y + 5, GetMyHero().z, GetMyHero().x + 50, GetMyHero().y + 5, GetMyHero().z + 50, 5, 0xFFFF0000)
 		for i, detectedSkillshot in pairs(detectedSkillshots) do
 			skillshotPos = skillshotPosition(detectedSkillshot, GetTickCount())
