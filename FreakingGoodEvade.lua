@@ -376,10 +376,10 @@ champions2 = {
 ["AatroxQ"] = {name = "AatroxQ", spellName = "AatroxQ", spellDelay = 250, projectileName = "AatroxQ.troy", projectileSpeed = 450, range = 650, radius = 145, type = "circle", cc = "true", collision = "false", shieldnow = "true"},
 }},
 ["Xerath"] = {charName = "Xerath", skillshots = {
-["Xerath Arcanopulse"] =  {name = "XerathArcanopulse", spellName = "XerathArcanopulse", spellDelay = 1375, projectileName = "Xerath_Beam_cas.troy", projectileSpeed = 25000, range = 1025, radius = 100, type = "line", cc = "false", collision = "false", shieldnow = "true"},
-["Xerath Arcanopulse Extended"] =  {name = "XerathArcanopulseExtended", spellName = "xeratharcanopulseextended", spellDelay = 1375, projectileName = "Xerath_Beam_cas.troy", projectileSpeed = 25000, range = 1625, radius = 100, type = "line", cc = "false", collision = "false", shieldnow = "true"},
-["xeratharcanebarragewrapper"] = {name = "xeratharcanebarragewrapper", spellName = "xeratharcanebarragewrapper", spellDelay = 250, projectileName = "Xerath_E_cas.troy", projectileSpeed = 300, range = 1100, radius = 265, type = "circular", cc = "false", collision = "false", shieldnow = "true"},
-["xeratharcanebarragewrapperext"] = {name = "xeratharcanebarragewrapperext", spellName = "xeratharcanebarragewrapperext", spellDelay = 250, projectileName = "Xerath_E_cas.troy", projectileSpeed = 300, range = 1700, radius = 265, type = "circular", cc = "false", collision = "false", shieldnow = "true"},
+--["Xerath Arcanopulse"] =  {name = "xeratharcaopulse2", spellName = "xeratharcaopulse2", spellDelay = 1375, projectileName = "Xerath_Beam_cas.troy", projectileSpeed = 25000, range = 1025, radius = 100, type = "line", cc = "false", collision = "false", shieldnow = "true"},
+--["XerathArcaneBarrage2"] = {name = "XerathArcaneBarrage2", spellName = "XerathArcaneBarrage2", spellDelay = 500, projectileName = "AnnieBasicAttack_mis.troy", projectileSpeed = 25000, range = 1100, radius = 350, type = "circular", cc = "true", collision = "false", shieldnow = "true"},
+--["XerathMageSpear"] = {name = "XerathMageSpear", spellName = "XerathMageSpear", spellDelay = 250, projectileName = "Xerath_E_cas.troy", projectileSpeed = 1600, range = 1050, radius = 210, type = "line", cc = "true", collision = "true", shieldnow = "true"},
+--["xerathlocuspulse"] = {name = "xerathlocuspulse", spellName = "xerathlocuspulse", spellDelay = 250, projectileName = "Xerath_E_cas.troy", projectileSpeed = 300, range = 5600, radius = 265, type = "circular", cc = "false", collision = "false", shieldnow = "true"},
 }},
 ["Lucian"] = {charName = "Lucian", skillshots = {
 ["LucianQ"] =  {name = "LucianQ", spellName = "LucianQ", spellDelay = 350, projectileName = "Lucian_Q_laser.troy", projectileSpeed = 25000, range = 570*2, radius = 65, type = "line", cc = "false", collision = "false", shieldnow = "true"},
@@ -416,7 +416,12 @@ champions2 = {
 ["Jinx"] = {charName = "Jinx", skillshots = {
 ["W"] =  {name = "Zap", spellName = "JinxW", spellDelay = 600, projectileName = "Jinx_W_Beam.troy", projectileSpeed = 3300, range = 1450, radius = 70, type = "line", cc = "true", collision = "true", shieldnow = "true"},
 ["R"] =  {name = "SuperMegaDeathRocket", spellName = "JinxRWrapper", spellDelay = 600, projectileName = "Jinx_R_Mis.troy", projectileSpeed = 1700, range = 20000, radius = 120, type = "line", cc = "false", collision = "false", shieldnow = "true"},
-}},         
+}},
+["VelKoz"] = {charName = "VelKoz", skillshots = {
+["VelKozQ"] =  {name = "VelKozQ", spellName = "VelKozQ", spellDelay = 250, projectileName = "Jinx_W_Beam.troy", projectileSpeed = 1200, range = 1050, radius = 210, type = "line", cc = "true", collision = "true", shieldnow = "true"},
+["VelkozW"] =  {name = "VelkozW", spellName = "VelkozW", spellDelay = 250, projectileName = "DarkBinding_mis.troy", projectileSpeed = 1200, range = 1050, radius = 210, type = "line", cc = "false", collision = "false", shieldnow = "true"},
+["VelkozE"] =  {name = "VelkozE", spellName = "VelkozE", spellDelay = 250, projectileName = "DarkBinding_mis.troy", projectileSpeed = 1200, range = 800, radius = 225, type = "circular", cc = "true", collision = "false", shieldnow = "true"},
+}},          
 }
 champions3 = {
 ["Aatrox"] = "AatroxW AatroxW2",
@@ -1416,6 +1421,10 @@ function OnTick()
 	
 	hitboxSize = hitboxTable[GetMyHero().charName]
 	
+	if hitboxSize == nil then
+		hitboxSize = 80.0
+	end
+	
 	nEnemies = CountEnemyHeroInRange(1500)
 	table.sort(enemyes, function(x,y) return GetDistance(x) < GetDistance(y) end)
 	
@@ -1794,11 +1803,13 @@ end
 
 function OnDraw()
 		if GoodEvadeConfig.drawEnabled then
-		DrawCircle(GetMyHero().x, GetMyHero().y, GetMyHero().z, hitboxTable[GetMyHero().charName], 0xFFFFFF)
+		DrawCircle(GetMyHero().x, GetMyHero().y + 5, GetMyHero().z, hitboxTable[GetMyHero().charName], 0xFFFFFF)
+		--DrawLine(GetMyHero().x, GetMyHero().y + 5, GetMyHero().z, GetMyHero().x + 50, GetMyHero().y + 5, GetMyHero().z + 50, 5, 0xFFFF0000)
 		for i, detectedSkillshot in pairs(detectedSkillshots) do
 			skillshotPos = skillshotPosition(detectedSkillshot, GetTickCount())
 			if detectedSkillshot.drawit == true then
 				if detectedSkillshot.skillshot.type == "line" then
+					--DrawHitBox(detectedSkillshot.object, 2, ARGB(255, 255, 0, 0))
 					drawLineshit(detectedSkillshot.startPosition, detectedSkillshot.endPosition, 0xFFFF0000, 3)
 					--drawRectshit(detectedSkillshot.startPosition, detectedSkillshot.endPosition, detectedSkillshot.skillshot.radius * 2, 0xFFFF0000, 1)
 					DrawCircle(skillshotPos.x, myHero.y, skillshotPos.y, detectedSkillshot.skillshot.radius, 0xFFFFFF)
