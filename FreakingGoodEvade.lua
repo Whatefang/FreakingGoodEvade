@@ -1,4 +1,4 @@
-local version = "4"
+local version = "5"
 
 require "old2dgeo"
 
@@ -284,6 +284,7 @@ champions2 = {
 ["Zyra"] = {charName = "Zyra", skillshots = {
 ["Grasping Roots"] = {name = "GraspingRoots", spellName = "ZyraGraspingRoots", spellDelay = 250, projectileName = "Zyra_E_sequence_impact.troy", projectileSpeed = 1150, range = 1150, radius = 70,  type = "line", cc = "true", collision = "false", shieldnow = "true"},
 ["Zyra Passive Death"] = {name = "ZyraPassive", spellName = "zyrapassivedeathmanager", spellDelay = 500, projectileName = "zyra_passive_plant_mis.troy", projectileSpeed = 2000, range = 1474, radius = 60,  type = "line", cc = "false", collision = "false", shieldnow = "true"},
+["Deadly Bloom"] = {name = "DeadlyBloom", spellName = "ZyraQFissure", spellDelay = 1000, projectileName = "Zyra_Q_cas.troy", projectileSpeed = 0, range = 800, radius = 250, type = "circular", cc = "false", collision = "false", shieldnow = "true"}
 }},
 ["Nautilus"] = {charName = "Nautilus", skillshots = {
 ["Dredge Line"] = {name = "DredgeLine", spellName = "NautilusAnchorDrag", spellDelay = 250, projectileName = "Nautilus_Q_mis.troy", projectileSpeed = 2000, range = 1080, radius = 80, type = "line", cc = "true", collision = "true", shieldnow = "true"},
@@ -376,10 +377,10 @@ champions2 = {
 ["AatroxQ"] = {name = "AatroxQ", spellName = "AatroxQ", spellDelay = 250, projectileName = "AatroxQ.troy", projectileSpeed = 450, range = 650, radius = 145, type = "circle", cc = "true", collision = "false", shieldnow = "true"},
 }},
 ["Xerath"] = {charName = "Xerath", skillshots = {
---["Xerath Arcanopulse"] =  {name = "xeratharcaopulse2", spellName = "xeratharcaopulse2", spellDelay = 1375, projectileName = "Xerath_Beam_cas.troy", projectileSpeed = 25000, range = 1025, radius = 100, type = "line", cc = "false", collision = "false", shieldnow = "true"},
---["XerathArcaneBarrage2"] = {name = "XerathArcaneBarrage2", spellName = "XerathArcaneBarrage2", spellDelay = 500, projectileName = "AnnieBasicAttack_mis.troy", projectileSpeed = 25000, range = 1100, radius = 350, type = "circular", cc = "true", collision = "false", shieldnow = "true"},
---["XerathMageSpear"] = {name = "XerathMageSpear", spellName = "XerathMageSpear", spellDelay = 250, projectileName = "Xerath_E_cas.troy", projectileSpeed = 1600, range = 1050, radius = 210, type = "line", cc = "true", collision = "true", shieldnow = "true"},
---["xerathlocuspulse"] = {name = "xerathlocuspulse", spellName = "xerathlocuspulse", spellDelay = 250, projectileName = "Xerath_E_cas.troy", projectileSpeed = 300, range = 5600, radius = 265, type = "circular", cc = "false", collision = "false", shieldnow = "true"},
+--["Xerath Arcanopulse"] =  {name = "xeratharcanopulse2", spellName = "xeratharcanopulse2", spellDelay = 250, projectileName = "hiu", projectileSpeed = 25000, range = 0, radius = 100, type = "line", cc = "false", collision = "false", shieldnow = "true"},
+["XerathArcaneBarrage2"] = {name = "XerathArcaneBarrage2", spellName = "XerathArcaneBarrage2", spellDelay = 500, projectileName = "Xerath_Base_W_cas.troy", projectileSpeed = 0, range = 1100, radius = 325, type = "circular", cc = "true", collision = "false", shieldnow = "true"},
+["XerathMageSpear"] = {name = "XerathMageSpear", spellName = "XerathMageSpear", spellDelay = 250, projectileName = "Xerath_Base_E_mis.troy", projectileSpeed = 1600, range = 1050, radius = 125, type = "line", cc = "true", collision = "true", shieldnow = "true"},
+["xerathlocuspulse"] = {name = "xerathlocuspulse", spellName = "xerathlocuspulse", spellDelay = 250, projectileName = "Xerath_Base_R_mis.troy", projectileSpeed = 300, range = 5600, radius = 265, type = "circular", cc = "false", collision = "false", shieldnow = "true"},
 }},
 ["Lucian"] = {charName = "Lucian", skillshots = {
 ["LucianQ"] =  {name = "LucianQ", spellName = "LucianQ", spellDelay = 350, projectileName = "Lucian_Q_laser.troy", projectileSpeed = 25000, range = 570*2, radius = 65, type = "line", cc = "false", collision = "false", shieldnow = "true"},
@@ -422,7 +423,16 @@ champions2 = {
 ["Plasma Fission Split"] =  {name = "VelKozQSplit", spellName = "VelKozQ", spellDelay = 250, projectileName = "Velkoz_Base_Q_Split_mis.troy", projectileSpeed = 1200, range = 1050, radius = 120, type = "line", cc = "true", collision = "true", shieldnow = "true"},
 ["Void Rift"] =  {name = "VelkozW", spellName = "VelkozW", spellDelay = 250, projectileName = "Velkoz_Base_W_Turret.troy", projectileSpeed = 1200, range = 1050, radius = 125, type = "line", cc = "false", collision = "false", shieldnow = "true"},
 ["Tectonic Disruption"] =  {name = "VelkozE", spellName = "VelkozE", spellDelay = 250, projectileName = "DarkBinding_mis.troy", projectileSpeed = 1200, range = 800, radius = 225, type = "circular", cc = "true", collision = "false", shieldnow = "true"},
-}},          
+}}, 
+["Heimerdinger"] = {charName = "Heimerdinger", skillshots = {
+--["Micro-Rockets"] = {name = "MicroRockets", spellName = "HeimerdingerW1", spellDelay = 500, projectileName = "Heimerdinger_Base_w_Mis.troy", projectileSpeed = 902, range = 1325, radius = 100, type = "line", cc = "false", collision = "true", shieldnow = "true"},
+--["Storm Grenade"] = {name = "StormGrenade", spellName = "HeimerdingerE", spellDelay = 250, projectileName = "Heimerdinger_Base_E_Mis.troy", projectileSpeed = 2500, range = 970, radius = 180, type = "circular", cc = "true", collision = "false", shieldnow = "true"},
+--["Micro-RocketsUlt"] = {name = "MicroRocketsUlt", spellName = "HeimerdingerW2", spellDelay = 500, projectileName = "Heimerdinger_Base_W_Mis_Ult.troy", projectileSpeed = 902, range = 1325, radius = 100, type = "line", cc = "false", collision = "true", shieldnow = "true"},
+--["Storm Grenade"] = {name = "StormGrenade", spellName = "HeimerdingerE2", spellDelay = 250, projectileName = "Heimerdinger_Base_E_Mis_Ult.troy", projectileSpeed = 2500, range = 970, radius = 180, type = "line", cc = "true", collision = "false", shieldnow = "true"},
+}},
+["Malzahar"] = {charName = "Malzahar", skillshots = {
+["Call Of The Void"] = {name = "CallOfTheVoid", spellName ="AlZaharCalloftheVoid1", spellDelay = 0, projectileName = "AlzaharCallofthevoid_mis.troy", projectileSpeed = 1600, range = 450, radius = 100, type = "line", cc = "true", collision = "false", shieldnow = "true"},
+}}         
 }
 champions3 = {
 ["Aatrox"] = "AatroxW AatroxW2",
@@ -524,6 +534,8 @@ wrotedisclaimer = false
 enemyes = {}
 nAllies = 0
 allies = {}
+hiu = nil
+hiuNum = 0
 nEnemies = 0
 evading             = false
 allowCustomMovement = true
@@ -732,7 +744,7 @@ local AutoUpdate = true
 local SELF = SCRIPT_PATH..GetCurrentEnv().FILE_NAME
 local URL = "https://raw.githubusercontent.com/Whatefang/FreakingGoodEvade/master/FreakingGoodEvade.lua"
 local UPDATE_TMP_FILE = LIB_PATH.."FGETmp.txt"
-local versionmessage = "<font color=\"#81BEF7\" >Changelog: Will no longer flash Annie ult if you have the option turned off. Changed the hitbox size used for dodging spells to better reflect actual hit box size, and allowed packets to go through if they didn't move you into a dangerous area. Should help with lockups after dodging a spell, needs testing though. Added Yasuo and Vel'Koz hitboxes, let me know if there's an issue.</font>"
+local versionmessage = "<font color=\"#81BEF7\" >Changelog: Added Zyra skillshots. Malzahar Q is coded in but doesn't work very well. Heimer's spells are coded in but don't work at all, so I've disabled them. I'll look into fixing it later.</font>"
 
 function Update()
 DownloadFile(URL, UPDATE_TMP_FILE, UpdateCallback)
@@ -779,16 +791,16 @@ function OnLoad()
 
 	ball = nil
 	GoodEvadeConfig = scriptConfig("Freaking Good Evade", "Freaking Good Evade")
-	GoodEvadeConfig:addParam("evadeBuffer", "Increase Skillshot width by ", SCRIPT_PARAM_SLICE, 15, 0, 50, 0 )
+	GoodEvadeConfig:addParam("evadeBuffer", "Increase Skillshot width by", SCRIPT_PARAM_SLICE, 15, 0, 50, 0 )
 	GoodEvadeConfig:addParam("lineallways", "Always try to dodge line skillshots", SCRIPT_PARAM_ONOFF, true)
-	GoodEvadeConfig:addParam("fowdelay", "Delay for skillshots in FOW", SCRIPT_PARAM_SLICE, 1, 1, 20, 0)
+	GoodEvadeConfig:addParam("fowdelay", "Delay for skillshots from FOW", SCRIPT_PARAM_SLICE, 1, 1, 20, 0)
 	GoodEvadeConfig:addParam("dodgeEnabled", "Dodge Skillshots", SCRIPT_PARAM_ONOFF, true)
 	GoodEvadeConfig:addParam("drawEnabled", "Draw Skillshots", SCRIPT_PARAM_ONOFF, true)
 	GoodEvadeConfig:addParam("dodgeCConly", "Dodge CC only spells", SCRIPT_PARAM_ONKEYDOWN, false, 32)
-	GoodEvadeConfig:addParam("dodgeCConly2", "Dodge CC only spells toggle", SCRIPT_PARAM_ONKEYTOGGLE, false, 77)
+	GoodEvadeConfig:addParam("dodgeCConly2", "Toggle dodge CC only spells", SCRIPT_PARAM_ONKEYTOGGLE, false, 77)
 	GoodEvadeConfig:addParam("resetdodge", "Reset Dodge", SCRIPT_PARAM_ONKEYDOWN, false, 17)
-	GoodEvadeConfig:addParam("usedashes", "Use Dash to dodge spells", SCRIPT_PARAM_ONOFF, true)
-	GoodEvadeConfig:addParam("useSummonerFlash", "Use Flash to dodge dangerous spells", SCRIPT_PARAM_ONOFF, true)
+	GoodEvadeConfig:addParam("usedashes", "Dash to dodge spells", SCRIPT_PARAM_ONOFF, true)
+	GoodEvadeConfig:addParam("useSummonerFlash", "Flash to dodge dangerous spells", SCRIPT_PARAM_ONOFF, true)
 	GoodEvadeConfig:addParam("allowMove", "Allow use of 0 cast time spells", SCRIPT_PARAM_ONOFF, true)
 	GoodEvadeConfig:addParam("stopCCMoves", "Use 0 cast time spells with self cc", SCRIPT_PARAM_ONOFF, true)
 	GoodEvadeConfig:addParam("freemovementblock", "Free Users Movement Block", SCRIPT_PARAM_ONOFF, false)
@@ -946,6 +958,7 @@ function getSideOfLine(linePoint1, linePoint2, point)
 end
 colstartpos = nil
 colendpos = nil
+
 function dodgeSkillshot(skillshot)
 		if GoodEvadeConfig.dodgeEnabled and not myHero.dead and CastingSpell == false then
 		if skillshot.skillshot.type == "line" then
@@ -1181,31 +1194,35 @@ function OnCreateObj(object)
 			for i, skillshot in pairs(skillShotChampion.skillshots) do
 				if GoodEvadeSkillshotConfig[tostring(skillshot.name)] == 2 then
 					if skillshot.projectileName == object.name then
-						for i, detectedSkillshot in pairs(detectedSkillshots) do
-							if detectedSkillshot.skillshot.projectileName == skillshot.projectileName then
-								return
-							end
-						end
-						for i = 1, heroManager.iCount, 1 do
-							currentHero = heroManager:GetHero(i)
-							if currentHero.team == myHero.team and skillShotChampion.charName == currentHero.charName then
-								return
-							end
-						end
-						
-						if GoodEvadeSkillshotConfig[tostring(skillshot.name)] == 2 or (GoodEvadeSkillshotConfig[tostring(skillshot.name)] == 1 and nEnemies <= 2 and not (GoodEvadeConfig.dodgeCConly or GoodEvadeConfig.dodgeCConly2)) then
-							if skillshot.type == "line" then
-								if(skillshotToAdd ~= nil) then
-									skillshotToAdd2 = {object = object, startPosition = nil, endPosition = nil, directionVector = nil, startTick = GetTickCount(), endTick = GetTickCount() + skillshot.range/skillshot.projectileSpeed*1000, skillshot = skillshot, evading = false, drawit = true, alreadydashed = false}
-								else
-									skillshotToAdd = {object = object, startPosition = nil, endPosition = nil, directionVector = nil, startTick = GetTickCount(), endTick = GetTickCount() + skillshot.range/skillshot.projectileSpeed*1000, skillshot = skillshot, evading = false, drawit = true, alreadydashed = false}
+						if(object.name == "hiu") then
+							--table.insert(hiu, object)
+						else
+							for i, detectedSkillshot in pairs(detectedSkillshots) do
+								if detectedSkillshot.skillshot.projectileName == skillshot.projectileName then
+									return
 								end
-								elseif skillshot.type == "circular" then
-								endPosition = Point2(object.x, object.z)
-								startPosition = Point2(object.x, object.z)
-								table.insert(detectedSkillshots, {startPosition = startPosition, endPosition = endPosition, 
-								directionVector = (endPosition - startPosition):normalized(), startTick = GetTickCount() + skillshot.spellDelay, 
-								endTick = GetTickCount() + skillshot.spellDelay + skillshot.projectileSpeed, skillshot = skillshot, evading = false, drawit = false, alreadydashed = false})
+							end
+							for i = 1, heroManager.iCount, 1 do
+								currentHero = heroManager:GetHero(i)
+								if currentHero.team == myHero.team and skillShotChampion.charName == currentHero.charName then
+									return
+								end
+							end
+							
+							if GoodEvadeSkillshotConfig[tostring(skillshot.name)] == 2 or (GoodEvadeSkillshotConfig[tostring(skillshot.name)] == 1 and nEnemies <= 2 and not (GoodEvadeConfig.dodgeCConly or GoodEvadeConfig.dodgeCConly2)) then
+								if skillshot.type == "line" then
+									if(skillshotToAdd ~= nil) then
+										skillshotToAdd2 = {object = object, startPosition = nil, endPosition = nil, directionVector = nil, startTick = GetTickCount(), endTick = GetTickCount() + skillshot.range/skillshot.projectileSpeed*1000, skillshot = skillshot, evading = false, drawit = true, alreadydashed = false}
+									else
+										skillshotToAdd = {object = object, startPosition = nil, endPosition = nil, directionVector = nil, startTick = GetTickCount(), endTick = GetTickCount() + skillshot.range/skillshot.projectileSpeed*1000, skillshot = skillshot, evading = false, drawit = true, alreadydashed = false}
+									end
+									elseif skillshot.type == "circular" then
+									endPosition = Point2(object.x, object.z)
+									startPosition = Point2(object.x, object.z)
+									table.insert(detectedSkillshots, {startPosition = startPosition, endPosition = endPosition, 
+									directionVector = (endPosition - startPosition):normalized(), startTick = GetTickCount() + skillshot.spellDelay, 
+									endTick = GetTickCount() + skillshot.spellDelay + skillshot.projectileSpeed, skillshot = skillshot, evading = false, drawit = false, alreadydashed = false})
+								end
 							end
 						end
 						return
@@ -1357,6 +1374,64 @@ function OnTick()
 			table.insert(detectedSkillshots, skillshotToAdd2)
 			skillshotToAdd2 = nil
 	end
+	if(hiu ~= nil) then
+		if(huiNum ~= 2) then
+			hiuNum = hiuNum + 1
+		else
+			local hiu1
+			local hiu2
+			local hero
+			
+			for i = 1, heroManager.iCount do
+				hero = heroManager:GetHero(i)
+				if hero.team ~= myHero.team then
+					if(hero.charName == "Xerath") then
+						break
+					end
+				end
+			end
+			
+			for selectedHiu in pairs(hiu) do
+				
+				if(hiu1 == nil) then
+					hiu1 = selectedHiu
+				else
+					if(hero:GetDistance(Point2(selectedHiu.x, selectedHiu.z) < hero:GetDistance(Point2(hiu1.x, hiu1.z)))) then
+						hiu1 = selectedHiu
+					end
+				end
+			end
+			
+			for selectedHiu in pairs(hiu) do
+				
+				if(hiu2 == nil) then
+					hiu2 = selectedHiu
+				else
+					if(hero:GetDistance(Point2(selectedHiu.x, selectedHiu.z) > hero:GetDistance(Point2(hiu2.x, hiu2.z)))) then
+						hiu2 = selectedHiu
+					end
+				end
+			end
+		end
+		
+		if(hiu1 ~= nil and hiu2 ~=nil) then
+			local range = math.sqrt((hiu2.x - hiu1.x) ^ 2 + (hiu2.z - hiu1.z) ^ 2)
+			champions2["Xerath"].skillshots["Xerath Arcanopulse"].range = range
+			table.insert(detectedSkillshots, {
+						 startPosition = Point2(hiu1.x, hiu1.z),
+						 endPosition = Point2(hiu1.x, hiu1.z)  + (Point2(hiu2.x, hiu2.z) - Point2(hiu1.x,hiu1.z)):normalized() * range,
+						 directionVector = (Point2(hiu2.x, hiu2.z) - Point2(hiu1.x, hiu1.z)):normalized(), 
+						 startTick = GetTickCount(), 
+						 endTick = GetTickCount() + range/25000*1000, 
+						 skillshot = champions2["Xerath"].skillshots["Xerath Arcanopulse"], 
+						 evading = false, 
+						 drawit = true, 
+						 alreadydashed = false})
+						 hiu = nil
+						 hiuNum = nil
+		end
+		
+	end
 	if shieldtick ~= nil then
 		if GetTickCount() >= shieldtick then
 			if haveShield() then
@@ -1490,7 +1565,12 @@ function OnTick()
 							
 							captureMovements = false
 							allowCustomMovement = true
-					if skillshot ~= nil then if skillshot.spellName ~= nil then if GoodEvadeSkillshotConfig[tostring(skillshot.name)] == 2 and (nSkillshots > 1) and NeedDash(skillshot, true) then DashTo(closestSafePoint.x, closestSafePoint.y) end end
+					if skillshot ~= nil then 
+						if skillshot.spellName ~= nil then 
+							if GoodEvadeSkillshotConfig[tostring(skillshot.name)] == 2 and (nSkillshots > 1) and NeedDash(skillshot, true) then 
+								DashTo(closestSafePoint.x, closestSafePoint.y) 
+							end 
+						end
 								myHero:MoveTo(closestSafePoint.x, closestSafePoint.y)
 								lastMovement.moveCommand = Point2(closestSafePoint.x, closestSafePoint.y)
 								allowCustomMovement = false
@@ -1763,7 +1843,7 @@ function continueMovement(skillshot)
 				captureMovements = false
 				myHero:MoveTo(getLastMovementDestination().x, getLastMovementDestination().y)
 				captureMovements = true
-				elseif lastMovement.type == 3 then
+			elseif lastMovement.type == 3 then
 				target = getTarget(lastMovement.targetId)
 				
 				if _isValidTarget(target) then
@@ -1775,9 +1855,9 @@ function continueMovement(skillshot)
 					myHero:MoveTo(myHero.x, myHero.z)
 					captureMovements = true
 				end
-				elseif lastMovement.type == 10 then
+			elseif lastMovement.type == 10 then
 				myHero:HoldPosition()
-				elseif lastMovement.type == 7 then
+			elseif lastMovement.type == 7 then
 				lastMovement.type = 3
 			end
 		end
@@ -2350,7 +2430,7 @@ end
 
 function dodgeCrescendo2(skillshot, evadeTo1, evadeTo2)
 	local safeTarget = nil
-	if haveflash and useflash and not skillshot.alreadydashed
+	if haveflash and useflash and GoodEvadeConfig.useSummonerFlash and not skillshot.alreadydashed
 		then if (evadeTo1:distance(lastMovement.destination) > evadeTo2:distance(lastMovement.destination)) and not InsideTheWall(evadeTo2) then
 			safeTarget = evadeTo2
 			elseif (evadeTo2:distance(lastMovement.destination) > evadeTo1:distance(lastMovement.destination)) and not InsideTheWall(evadeTo1) then
