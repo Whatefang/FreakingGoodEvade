@@ -1,4 +1,4 @@
-local version = "7"
+local version = "8"
 
 require "old2dgeo"
 
@@ -747,7 +747,7 @@ local AutoUpdate = true
 local SELF = SCRIPT_PATH..GetCurrentEnv().FILE_NAME
 local URL = "https://raw.githubusercontent.com/Whatefang/FreakingGoodEvade/master/FreakingGoodEvade.lua"
 local UPDATE_TMP_FILE = LIB_PATH.."FGETmp.txt"
-local versionmessage = "<font color=\"#81BEF7\" >Changelog: Added dodge towards mouse. This will cause dash spells to be cast at your mouse position. All skillshots should properly display, whether or not the script dodges them. Removed some specialized logic for crescendo and annie/malphite ults, should still work fine but will be handled in a much easier fashion; let me know if there are issues with it.</font>"
+local versionmessage = "<font color=\"#81BEF7\" >Changelog: Fixed dodging of dangerous skillshots with flash; should now flash first before dashing. Flash is also now effected by the Dash To Mouse setting. Dash to mouse will now properly dash the entire length of the dash, whether your mouse is directly on top of your champion or not.</font>"
 
 function Update()
 DownloadFile(URL, UPDATE_TMP_FILE, UpdateCallback)
@@ -992,7 +992,16 @@ function dodgeCircularShot(skillshot)
 	evadeRadius = skillshot.skillshot.radius + hitboxSize / 2 + GoodEvadeConfig.evadeBuffer + moveBuffer
 	
 	safeTarget = skillshot.endPosition + (heroPosition - skillshot.endPosition):normalized() * evadeRadius
-	
+
+	if isreallydangerous(skillshot) then
+		if dodgeDangerousCircle1(skillshot) then
+			alreadydodged = true
+			elseif dodgeDangerousCircle2(skillshot, heroPosition) then
+			alreadydodged = true
+			elseif dodgeDangerousCircle3(skillshot, safeTarget) then
+			alreadydodged = true
+		end
+	end
 
 	if not alreadydodged then
 		if mainCircularskillshot1(skillshot, heroPosition, moveableDistance, evadeRadius, safeTarget) then
@@ -1019,6 +1028,18 @@ function haveShield()
 end
 
 function FlashTo(x, y)
+
+	if GoodEvadeConfig.dashMouse then
+	
+		local evadePos = Point2(mousePos.x, mousePos.z)
+		local myPos = Point2(myHero.x, myHero.z)
+		local ourdistance = evadePos:distance(myPos)
+		local dashPos = myPos - (myPos - evadePos):normalized() * 400
+	
+		x = dashPos.x
+		y = dashPos.y
+	end
+
 	CastSpell(flashSlot, x, y)
 end
 
@@ -1037,36 +1058,46 @@ function dodgeLineShot(skillshot)
 	evadeTo1 = heroPosition + normalVector * nessecaryMoveWidth
 	evadeTo2 = heroPosition - normalVector * nessecaryMoveWidth
 	
-	if not alreadydodged then
-		if lineSkillshot1(skillshot, heroPosition, skillshotLine, distanceFromSkillshotPath, evadeDistance, normalVector, nessecaryMoveWidth, evadeTo1, evadeTo2) then 
+	if isreallydangerous(skillshot) then
+		if dodgeDangerousLine1(skillshot) then 
 			alreadydodged = true
-		elseif lineSkillshot2(skillshot) then 
-			alreadydodged = true
-		elseif lineSkillshot3(skillshot, evadeTo1, evadeTo2) then 
-			alreadydodged = true
-		elseif lineSkillshot4(skillshot, evadeTo1, evadeTo2) then 
+			elseif dodgeDangerousLine2(skillshot, evadeTo1, evadeTo2) then
 			alreadydodged = true
 		end
 	end
+	
+	if not alreadydodged then
+		if lineSkillshot1(skillshot, heroPosition, skillshotLine, distanceFromSkillshotPath, evadeDistance, normalVector, nessecaryMoveWidth, evadeTo1, evadeTo2)
+			then alreadydodged = true
+			elseif lineSkillshot2(skillshot)
+			then alreadydodged = true
+			elseif lineSkillshot3(skillshot, evadeTo1, evadeTo2)
+			then alreadydodged = true
+			elseif lineSkillshot4(skillshot, evadeTo1, evadeTo2)
+			then alreadydodged = true
+		end
+	end
+	
 end
 
 function _isDangerSkillshot(skillshot)
-	if skillshot.skillshot.name == "LeonaZenithBlade" or
-	   skillshot.skillshot.name == "EnchantedArrow" or
-	   skillshot.skillshot.name == "LuxMaliceCannon" or
-	   skillshot.skillshot.name == "SejuaniR" or
-	   skillshot.skillshot.name == "Crescendo" or
-	   skillshot.skillshot.name == "TrueshotBarrage" or
-	   skillshot.skillshot.name == "RocketGrab" or
-	   skillshot.skillshot.name == "DredgeLine" or
-	   skillshot.skillshot.name == "ShadowDash" or
-	   skillshot.skillshot.name == "FizzULT" or
-	   skillshot.skillshot.name == "VarusR" or
-	   skillshot.skillshot.name == "SuperMegaDeathRocket" or
-	   skillshot.skillshot.name == "UFSlash" or
-	   skillshot.skillshot.name == "LeonaSolarFlare" or
-	   skillshot.skillshot.name == "AnnieR" or
-  	   skillshot.skillshot.name == "OrianaDetonateCommand" then
+		if skillshot.skillshot.name == "LeonaZenithBlade" 
+		or skillshot.skillshot.name == "EnchantedArrow" 
+		or skillshot.skillshot.name == "LuxMaliceCannon"
+		or skillshot.skillshot.name == "SejuaniR"
+		or skillshot.skillshot.name == "Crescendo"
+		or skillshot.skillshot.name == "TrueshotBarrage"
+		or skillshot.skillshot.name == "RocketGrab"
+		or skillshot.skillshot.name == "DredgeLine"
+		or skillshot.skillshot.name == "ShadowDash"
+		or skillshot.skillshot.name == "FizzULT"
+		or skillshot.skillshot.name == "VarusR"
+		or skillshot.skillshot.name == "SuperMegaDeathRocket"
+		or skillshot.skillshot.name == "UFSlash"
+		or skillshot.skillshot.name == "LeonaSolarFlare"
+		or skillshot.skillshot.name == "AnnieR"
+		or skillshot.skillshot.name == "OrianaDetonateCommand"
+		then
 		return true
 	else
 		return false
@@ -1616,8 +1647,15 @@ function DashTo(x, y)
 		if GoodEvadeConfig.usedashes then
 		
 		if GoodEvadeConfig.dashMouse then
-			x = mousePos.x
-			y = mousePos.z
+		
+			local evadePos = Point2(mousePos.x, mousePos.z)
+			local myPos = Point2(myHero.x, myHero.z)
+			local ourdistance = evadePos:distance(myPos)
+			local dashPos = myPos - (myPos - evadePos):normalized() * dashrange
+		
+			x = dashPos.x
+			y = dashPos.y
+			
 		end
 		
 		if isVayne and  myHero:CanUseSpell(_Q) == READY then
@@ -1660,6 +1698,7 @@ function DashTo(x, y)
 		end   
 	end                          
 end
+
 function NeedDash(skillshot, forceDash)
 	if GoodEvadeSkillshotConfig[tostring(skillshot.skillshot.name)] == 2 or (GoodEvadeSkillshotConfig[tostring(skillshot.skillshot.name)] == 1 and nEnemies <= 2 and not (skillshot.skillshot.cc and ((GoodEvadeConfig.dodgeCConly == skillshot.skillshot.cc or GoodEvadeConfig.dodgeCConly2 == skillshot.skillshot.cc)))) then
 		if GoodEvadeConfig.usedashes then
@@ -1878,7 +1917,6 @@ end
 
 function OnDraw()
 	if GoodEvadeConfig.drawEnabled then
-		DrawCircle(mousePos.x, mousePos.y, mousePos.z, 25, 0xFFFFFF)
 		DrawCircle(GetMyHero().x, GetMyHero().y + 5, GetMyHero().z, hitboxSize, 0xFFFFFF)
 		for i, detectedSkillshot in pairs(detectedSkillshots) do
 			skillshotPos = skillshotPosition(detectedSkillshot, GetTickCount())
@@ -2115,6 +2153,71 @@ function mainCircularskillshot1(skillshot, heroPosition, moveableDistance, evade
 	return false
 end
 
+function dodgeDangerousCircle1(skillshot)         
+		if haveShield() then
+		for i, detectedSkillshot in ipairs(detectedSkillshots) do
+			if detectedSkillshot.skillshot.name == skillshot.skillshot.name then
+				table.remove(detectedSkillshots, i)
+				i = i-1
+				if detectedSkillshot.evading then
+					continueMovement(detectedSkillshot)
+				end
+			end
+		end
+		if isSivir then
+			CastSpell(_E)
+			elseif isNocturne then
+			CastSpell(_W)
+		end
+		return true
+		else return false
+	end
+	return false
+end
+
+function dodgeDangerousCircle2(skillshot, heroPosition)
+	if GoodEvadeConfig.useSummonerFlash and flashready and getLastMovementDestination():distance(heroPosition) > 20 and not skillshot.alreadydashed then
+		dashpos = getLastMovementDestination() + (getLastMovementDestination() - heroPosition):normalized() * 400
+		if dashpos:distance(skillshot.endPosition) > skillshot.skillshot.radius and not InsideTheWall(dashpos) then
+			FlashTo(dashpos.x, dashpos.y)
+			skillshot.alreadydashed = true
+			for i, detectedSkillshot in ipairs(detectedSkillshots) do
+				if detectedSkillshot.skillshot.name == skillshot.skillshot.name then
+					table.remove(detectedSkillshots, i)
+					i = i-1
+					if detectedSkillshot.evading then
+						continueMovement(detectedSkillshot)
+					end
+				end
+			end
+			return true
+			else return false
+		end
+		else return false
+	end
+	return false
+end
+
+function dodgeDangerousCircle3(skillshot, safeTarget)
+		if GoodEvadeConfig.useSummonerFlash and flashready and not skillshot.alreadydashed then
+		FlashTo(safeTarget.x, safeTarget.y)
+		skillshot.alreadydashed = true
+		for i, detectedSkillshot in ipairs(detectedSkillshots) do
+			if detectedSkillshot.skillshot.name == skillshot.skillshot.name then
+				table.remove(detectedSkillshots, i)
+				i = i-1
+				if detectedSkillshot.evading then
+					continueMovement(detectedSkillshot)
+				end
+			end
+		end
+		return true
+		else return false
+	end
+	return false
+end
+
+
 -- end of circular skillshot dodging functions --
 -- beggining of line skillshot dodging functions --
 function lineSkillshot1(skillshot, heroPosition, skillshotLine, distanceFromSkillshotPath, evadeDistance, normalVector, nessecaryMoveWidth, evadeTo1, evadeTo2)
@@ -2300,6 +2403,51 @@ function lineSkillshot4(skillshot, evadeTo1, evadeTo2)
 		
 		if safeTarget ~= nil then
 			evadeTo(safeTarget.x, safeTarget.y)
+			return true
+			else return false
+		end
+		else return false
+	end
+	return false
+end
+
+function dodgeDangerousLine1(skillshot)
+		if haveShield() then 
+		for i, detectedSkillshot in ipairs(detectedSkillshots) do
+			if detectedSkillshot.skillshot.name == skillshot.skillshot.name then
+				table.remove(detectedSkillshots, i)
+				i = i-1
+				if detectedSkillshot.evading then
+					continueMovement(detectedSkillshot)
+				end
+			end
+		end
+		if isSivir then
+			CastSpell(_E)
+		elseif isNocturne then
+			CastSpell(_W)
+		end
+		return true
+		else return false
+	end
+	return false
+end
+
+function dodgeDangerousLine2(skillshot, evadeTo1, evadeTo2)
+	local safeTarget = nil
+	if haveflash and useflash and GoodEvadeConfig.useSummonerFlash and not skillshot.alreadydashed
+		then if (evadeTo1:distance(lastMovement.destination) > evadeTo2:distance(lastMovement.destination)) and not InsideTheWall(evadeTo2) then
+			safeTarget = evadeTo2
+			elseif (evadeTo2:distance(lastMovement.destination) > evadeTo1:distance(lastMovement.destination)) and not InsideTheWall(evadeTo1) then
+			safeTarget = evadeTo1
+			elseif InsideTheWall(evadeTo2) then
+			safeTarget = evadeTo1
+			elseif InsideTheWall(evadeTo1) then
+			safeTarget = evadeTo2
+		end
+		if safeTarget ~= nil then
+			FlashTo(safeTarget.x, safeTarget.y)
+			skillshot.alreadydashed = true
 			return true
 			else return false
 		end
