@@ -1,4 +1,4 @@
-local version = "9"
+local version = "10"
 
 require "old2dgeo"
 
