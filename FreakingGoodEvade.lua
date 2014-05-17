@@ -435,7 +435,11 @@ champions2 = {
 }}	,
 ["Janna"] = {charName = "Janna", skillshots = {
 ["Howling Gale"] = {name = "HowlingGale", spellName ="HowlingGale", spellDelay = 0, projectileName = "HowlingGale_mis.troy", projectileSpeed = 500, range = 0, radius = 100, type = "line", cc = "true", collision = "false", shieldnow = "true"},
-}}        
+}},
+["Braum"] = {charName = "Braum", skillshots = {
+["Winters Bite"] = {name = "WintersBite", spellName = "BraumQ", spellDelay = 225, projectileName = "Braum_Base_Q_mis.troy", projectileSpeed = 1600, range = 1000, radius = 100, type = "line", cc = "false", collision = "true", shieldnow = "true"},
+["Glacial Fissure"] = {name = "GlacialFissure", spellName = "BraumRWrapper", spellDelay = 500, projectileName = "Braum_Base_R_mis.troy", projectileSpeed = 1250, range = 1250, radius = 100, type = "line", cc = "false", collision = "true", shieldnow = "true"},
+}}      
 }
 champions3 = {
 ["Aatrox"] = "AatroxW AatroxW2",
@@ -747,7 +751,7 @@ local AutoUpdate = true
 local SELF = SCRIPT_PATH..GetCurrentEnv().FILE_NAME
 local URL = "https://raw.githubusercontent.com/Whatefang/FreakingGoodEvade/master/FreakingGoodEvade.lua"
 local UPDATE_TMP_FILE = LIB_PATH.."FGETmp.txt"
-local versionmessage = "<font color=\"#81BEF7\" >Changelog: Added various AOE CC ults to dangerous ults; fixed handling (should now Spellshield > Dash > Flash out) of those spells. Added dash to dodge spells % HP slider. Swapped around menu items. Added a new drawing system; will draw a rectangle around the length of each skillshot to better show the hitbox. </font>"
+local versionmessage = "<font color=\"#81BEF7\" >Changelog: Added Braum's skillshots.</font>"
 
 function Update()
 DownloadFile(URL, UPDATE_TMP_FILE, UpdateCallback)
@@ -1221,7 +1225,6 @@ function OnCreateObj(object)
 		if object ~= nil and object.type == "obj_GeneralParticleEmmiter" then
 		for i, skillShotChampion in pairs(champions) do
 			for i, skillshot in pairs(skillShotChampion.skillshots) do
-				if GoodEvadeSkillshotConfig[tostring(skillshot.name)] == 2 then
 					if skillshot.projectileName == object.name then
 							for i, detectedSkillshot in pairs(detectedSkillshots) do
 								if detectedSkillshot.skillshot.projectileName == skillshot.projectileName then
@@ -1251,7 +1254,6 @@ function OnCreateObj(object)
 						end
 						return
 					end
-			end
 		end
 	end
 end
