@@ -1,4 +1,4 @@
-local version = "10"
+local version = "11"
 
 require "old2dgeo"
 
@@ -751,7 +751,7 @@ local AutoUpdate = true
 local SELF = SCRIPT_PATH..GetCurrentEnv().FILE_NAME
 local URL = "https://raw.githubusercontent.com/Whatefang/FreakingGoodEvade/master/FreakingGoodEvade.lua"
 local UPDATE_TMP_FILE = LIB_PATH.."FGETmp.txt"
-local versionmessage = "<font color=\"#81BEF7\" >Changelog: Added Braum's skillshots.</font>"
+local versionmessage = "<font color=\"#81BEF7\" >Changelog: Added Braum's skillshots. Fixed an issue with flash dodging skillshots; will now properly dodge with flash even if the \"use dodge to evade\" setting is off.</font>"
 
 function Update()
 DownloadFile(URL, UPDATE_TMP_FILE, UpdateCallback)
@@ -997,7 +997,7 @@ function dodgeCircularShot(skillshot)
 	
 	safeTarget = skillshot.endPosition + (heroPosition - skillshot.endPosition):normalized() * evadeRadius
 
-	if false and isreallydangerous(skillshot) then
+	if isreallydangerous(skillshot) then
 		if mainCircularskillshot1(skillshot, heroPosition, moveableDistance, evadeRadius, safeTarget) then
 			alreadydodged = true
 		elseif dodgeDangerousCircle1(skillshot) then
@@ -1598,9 +1598,6 @@ function DashTo(x, y)
 			CastSpell(_E, x, y)
 			elseif isLucian and myHero:CanUseSpell(_E) == READY then
 			CastSpell(_E, x, y)
-			elseif haveflash and flashready and useflash and GoodEvadeConfig.useSummonerFlash then
-			CastSpell(flashSlot, x, y)
-			useflash = false
 			elseif isCaitlyn and myHero:CanUseSpell(_E) == READY then
 			myPos = Point2(myHero.x, myHero.z)
 			castpos = myPos + (myPos - (Point2(x, y)))
@@ -1727,10 +1724,6 @@ function NeedDash(skillshot, forceDash)
 				if _isDangerSkillshot(skillshot) then
 					dashrange = 600
 				return true end
-				elseif GoodEvadeConfig.useSummonerFlash and haveflash and flashready and isreallydangerous(skillshot) then
-				dashrange = 400
-				useflash = true
-				return true
 			end                      
 		end
 	end
@@ -1839,10 +1832,10 @@ function drawLineshit(point1, point2, color, width1, skillshot)
 		BL =  Point2((math.cos(A) * ((x + Width / 2) - x)) - (math.sin(A) * ((y - Height / 2) - y)) + x, (math.cos(A) * ((y - Height / 2) - y)) + (math.sin(A) * ((x + Width / 2) - x)) + y)
 		BR =  Point2((math.cos(A) * ((x - Width / 2) - x)) - (math.sin(A) * ((y - Height / 2) - y)) + x, (math.cos(A) * ((y - Height / 2) - y)) + (math.sin(A) * ((x - Width / 2) - x)) + y)
 	
-		UL2 = WorldToScreen(D3DXVECTOR3(UL.x, -175, UL.y))
-		UR2 = WorldToScreen(D3DXVECTOR3(UR.x, -175, UR.y))
-		BL2 = WorldToScreen(D3DXVECTOR3(BL.x, -175, BL.y))
-		BR2 = WorldToScreen(D3DXVECTOR3(BR.x, -175, BR.y))
+		UL2 = WorldToScreen(D3DXVECTOR3(UL.x, GetMyHero().y, UL.y))
+		UR2 = WorldToScreen(D3DXVECTOR3(UR.x, GetMyHero().y, UR.y))
+		BL2 = WorldToScreen(D3DXVECTOR3(BL.x, GetMyHero().y, BL.y))
+		BR2 = WorldToScreen(D3DXVECTOR3(BR.x, GetMyHero().y, BR.y))
 		
 		DrawLine(UL2.x, UL2.y, UR2.x, UR2.y, 1, 0xFFFF0000)
 		DrawLine(UL2.x, UL2.y, BL2.x, BL2.y, 1, 0xFFFF0000)
