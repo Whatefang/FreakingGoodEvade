@@ -1,4 +1,4 @@
-local version = "11"
+local version = "12"
 
 require "old2dgeo"
 
@@ -270,7 +270,7 @@ champions2 = {
 ["Leona Solar Flare"] = {name = "LeonaSolarFlare", spellName = "LeonaSolarFlare", spellDelay = 250, projectileName = "Leona_SolarFlare_cas.troy", projectileSpeed = 1500, range = 1200, radius = 300, type = "circular", cc = "true", collision = "false", shieldnow = "true"}
 }},
 ["Karthus"] = {charName = "Karthus", skillshots = {
-["Lay Waste"] = {name = "LayWaste", spellName = "LayWaste", spellDelay = 250, projectileName = "LayWaste_point.troy", projectileSpeed = 1750, range = 875, radius = 140, type = "circular", cc = "false", collision = "false", shieldnow = "true"}
+["Lay Waste"] = {name = "LayWaste", spellName = "KarthusLayWasteA", spellDelay = 250, projectileName = "Karthus_Base_Q_Point_red.troy", projectileSpeed = 1750, range = 875, radius = 140, type = "circular", cc = "false", collision = "false", shieldnow = "true"}
 }},
 ["Chogath"] = {charName = "Chogath", skillshots = {
 ["Rupture"] = {name = "Rupture", spellName = "Rupture", spellDelay = 0, projectileName = "rupture_cas_01_red_team.troy", projectileSpeed = 950, range = 950, radius = 250, type = "circular", cc = "true", collision = "false", shieldnow = "true"}
@@ -751,7 +751,7 @@ local AutoUpdate = true
 local SELF = SCRIPT_PATH..GetCurrentEnv().FILE_NAME
 local URL = "https://raw.githubusercontent.com/Whatefang/FreakingGoodEvade/master/FreakingGoodEvade.lua"
 local UPDATE_TMP_FILE = LIB_PATH.."FGETmp.txt"
-local versionmessage = "<font color=\"#81BEF7\" >Changelog: Added Braum's skillshots. Fixed an issue with flash dodging skillshots; will now properly dodge with flash even if the \"use dodge to evade\" setting is off.</font>"
+local versionmessage = "<font color=\"#81BEF7\" >Changelog: Added new Karthus Q, should work all the time when in vision but doesn't work 100% of the time when cast from the fog of war.</font>"
 
 function Update()
 DownloadFile(URL, UPDATE_TMP_FILE, UpdateCallback)
@@ -1293,7 +1293,17 @@ function OnProcessSpell(unit, spell)
 			for i, skillShotChampion in pairs(champions) do
 				if skillShotChampion.charName == unit.charName then
 					for i, skillshot in pairs(skillShotChampion.skillshots) do
-						if skillshot.spellName == spell.name then
+						continueAdding = false
+						if skillshot.spellName == "KarthusLayWasteA" then
+							if spell.name == "KarthusLayWasteA1" or "KarthusLayWasteA2" or "KarthusLayWasteA3" then
+								continueAdding = true
+							end
+						else
+							if skillshot.spellName == spell.name then
+								continueAdding = true
+							end
+						end
+						if continueAdding then
 							startPosition = Point2(spell.startPos.x, spell.startPos.z)
 							endPosition = Point2(spell.endPos.x, spell.endPos.z)
 							if(spell.name == "xeratharcanopulse2") then
